@@ -1,0 +1,23 @@
+{
+  "use_connector": "mysql",
+  "connectors": [
+    {
+      "__comment": "Mysql connector",
+      "driver": "mysql",
+      "host": "localhost",
+      "charset": "utf8",
+      "useSSL": false
+    },
+    {
+      "__comment": "SQL Server connector",
+      "driver": "sqlserver",
+      "server": "youserver.database.windows.net",
+      "encrypt": true,
+      "trustServerCertificate": false
+    }
+  ],
+  "dbname": "ppe_lourd",
+  "user": "",
+  "password": "",
+  "port": 3306
+}

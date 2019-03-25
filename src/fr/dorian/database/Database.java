@@ -1,11 +1,7 @@
 package fr.dorian.database;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import com.sun.xml.internal.bind.v2.util.CollisionCheckStack;
-import fr.dorian.content.Eleve;
-import fr.dorian.content.Entite;
+import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,8 +40,22 @@ public class Database {
 
     public void connectDb(){
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            this.connection = DriverManager.getConnection(this.driver + "://" + this.host + ":" + this.port + "/" + this.database + "?charset=utf8&useSSL=false", this.user, this.password);
+
+            switch (this.driver){
+                case DRIVER_MYSQL:
+                    System.out.println("DRIVER MYSQL DETECTED");
+
+                    Class.forName("com.mysql.jdbc.Driver");
+                    this.connection = DriverManager.getConnection(this.driver + "://" + this.host + ":" + this.port + "/" + this.database + "?charset=utf8&useSSL=false", this.user, this.password);
+                    break;
+                case DRIVER_SQLSERVER:
+                    System.out.println("DRIVER SQLSERVER DETECTED");
+
+                    String uri = this.driver + "://" + this.host + ":"+port+";databaseName="+ this.database + ";instanceName=IFU-NC4OKL4;integratedSecurity=true;";
+
+                    this.connection = DriverManager.getConnection(uri);
+                    break;
+            }
             System.out.println("La base de données a bien été connecté.");
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -82,25 +92,6 @@ public class Database {
 
         connectDb();
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT e.* FROM " + table + " t INNER JOIN entite e ON e.id_entite=t.id_entite");
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while(resultSet.next()) {
-                Eleve eleve = new Eleve(resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getDate(4),
-                        resultSet.getString(5),
-                        resultSet.getString(6));
-
-                collection.add((T) eleve);
-            }
-
-        } catch (SQLException e){
-            System.out.println(e.getMessage());
-        }
 
         disconnectDb();
 

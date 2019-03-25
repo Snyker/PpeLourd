@@ -5,8 +5,7 @@ import fr.dorian.database.Database;
 import fr.dorian.screen.MainScreen;
 import fr.dorian.task.LoadTask;
 
-import javax.swing.*;
-import java.sql.SQLOutput;
+import java.io.File;
 import java.util.*;
 
 /**
@@ -46,7 +45,8 @@ public class Application {
 
         //On enregistre la base de données
         System.out.println("Préparation de la base de données...");
-        database = new Database(Database.DRIVER_MYSQL, "localhost", 3306, "ppe_lourd", "root", "");
+        //database = new Database(Database.DRIVER_MYSQL, "localhost", 3306, "ppe_lourd", "root", "");
+        database = new Database(Database.DRIVER_SQLSERVER, "localhost", 1433, "ppe_lourd", "IFU-NC4OKL4\\Arkas", "");
         System.out.println("Base de données : OK");
 
         //Lancement de la fenetre

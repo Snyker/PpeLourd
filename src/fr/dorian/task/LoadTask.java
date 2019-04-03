@@ -24,7 +24,7 @@ public class LoadTask implements Runnable {
     private Map<Integer, Matiere> matiereList = new HashMap<>();
     private Map<Integer, Classe> classeList = new HashMap<>();
     private Map<Integer, Salle> salleList = new HashMap<>();
-    private List<Seance> seanceList = new ArrayList<>();
+    private Map<Integer, Seance> seanceList = new HashMap<>();
 
     public LoadTask(Database database) {
         this.database = database;
@@ -52,7 +52,7 @@ public class LoadTask implements Runnable {
 
         try {
             //Chargement des eleves
-            final PreparedStatement statementEleve = connection.prepareStatement("SELECT e.* FROM eleves INNER JOIN entite e on eleves.id_entite = e.id_entite");
+            final PreparedStatement statementEleve = connection.prepareStatement("SELECT e.* FROM dbo.eleves INNER JOIN dbo.personne e on eleves.id_personne = e.id_personne");
             ResultSet resultSet = statementEleve.executeQuery();
 
             while(resultSet.next()) {
@@ -70,7 +70,7 @@ public class LoadTask implements Runnable {
             statementEleve.close();
             /* ---- */
 
-            final PreparedStatement statementMat = connection.prepareStatement("SELECT * FROM matieres");
+            final PreparedStatement statementMat = connection.prepareStatement("SELECT * FROM dbo.matieres");
             resultSet = statementMat.executeQuery();
 
             while(resultSet.next()) {
@@ -85,7 +85,7 @@ public class LoadTask implements Runnable {
             statementMat.close();
             /* ---- */
 
-            final PreparedStatement statementProfessor = connection.prepareStatement("SELECT e.*, id_matiere FROM professeurs INNER JOIN entite e on professeurs.id_entite = e.id_entite");
+            final PreparedStatement statementProfessor = connection.prepareStatement("SELECT e.*, id_matiere FROM dbo.professeurs INNER JOIN dbo.personne e on dbo.professeurs.id_personne = e.id_personne");
             resultSet = statementProfessor.executeQuery();
 
             while(resultSet.next()) {
@@ -104,7 +104,7 @@ public class LoadTask implements Runnable {
 
             statementProfessor.close();
             /* ---- */
-            final PreparedStatement statementParent = connection.prepareStatement("SELECT * FROM entite HAVING id_entite NOT IN (SELECT e.id_entite FROM eleves e) AND id_entite NOT IN (SELECT p.id_entite FROM professeurs p) ");
+            final PreparedStatement statementParent = connection.prepareStatement("SELECT * FROM dbo.personne WHERE id_personne NOT IN (SELECT e.id_personne FROM dbo.eleves e) AND id_personne NOT IN (SELECT p.id_personne FROM dbo.professeurs p) ");
             resultSet = statementParent.executeQuery();
 
             while(resultSet.next()) {
@@ -122,7 +122,7 @@ public class LoadTask implements Runnable {
 
             statementParent.close();
             /* ---- */
-            final PreparedStatement statementSalle = connection.prepareStatement("SELECT * FROM salles");
+            final PreparedStatement statementSalle = connection.prepareStatement("SELECT * FROM dbo.salles");
             resultSet = statementSalle.executeQuery();
 
             while(resultSet.next()) {
@@ -138,7 +138,7 @@ public class LoadTask implements Runnable {
 
             statementSalle.close();
             /* ---- */
-            final PreparedStatement statementClasse = connection.prepareStatement("SELECT * FROM classes");
+            final PreparedStatement statementClasse = connection.prepareStatement("SELECT * FROM dbo.classes");
             resultSet = statementClasse.executeQuery();
 
             while(resultSet.next()) {
@@ -152,12 +152,12 @@ public class LoadTask implements Runnable {
 
             statementClasse.close();
             /* ---- MISE EN PLACE DE LA RELATION parent<->eleve ---- */
-            final PreparedStatement statementRelPE = connection.prepareStatement("SELECT * FROM parents");
+            final PreparedStatement statementRelPE = connection.prepareStatement("SELECT * FROM dbo.avoir_parent");
             resultSet = statementRelPE.executeQuery();
 
             while(resultSet.next()) {
 
-                Eleve eleve = eleveList.get(resultSet.getInt("id_entite"));
+                Eleve eleve = eleveList.get(resultSet.getInt("id_personne"));
                 Parent parent = parentList.get(resultSet.getInt("id_parent"));
 
                 eleve.addParent(parent);
@@ -166,13 +166,13 @@ public class LoadTask implements Runnable {
 
             statementRelPE.close();
             /* ---- MISE EN PLACE DE LA RELATION classe<->eleve ---- */
-            final PreparedStatement statementRelEC = connection.prepareStatement("SELECT * FROM etre_dans");
+            final PreparedStatement statementRelEC = connection.prepareStatement("SELECT * FROM dbo.etre_dans");
             resultSet = statementRelEC.executeQuery();
 
             while(resultSet.next()) {
 
                 String groupe = resultSet.getString("groupe");
-                Eleve eleve = eleveList.get(resultSet.getInt("id_entite"));
+                Eleve eleve = eleveList.get(resultSet.getInt("id_personne"));
                 Classe classe = classeList.get(resultSet.getInt("id_classe"));
 
                 eleve.setGroupe(groupe);
@@ -181,7 +181,7 @@ public class LoadTask implements Runnable {
 
             statementRelEC.close();
             /* ---- SEANCE ---- */
-            final PreparedStatement statementSeance = connection.prepareStatement("SELECT * FROM seance");
+            final PreparedStatement statementSeance = connection.prepareStatement("SELECT * FROM dbo.seance ORDER BY date_debut ASC");
             resultSet = statementSeance.executeQuery();
 
             while(resultSet.next()) {
@@ -190,12 +190,12 @@ public class LoadTask implements Runnable {
                         resultSet.getInt("id_seance"),
                         resultSet.getDate("date_debut"),
                         resultSet.getDate("date_fin"),
-                        professeurList.get(resultSet.getInt("id_entite")),
+                        professeurList.get(resultSet.getInt("id_personne")),
                         classeList.get(resultSet.getInt("id_classe")),
                         salleList.get(resultSet.getInt("id_salle"))
                 );
 
-                seanceList.add(seance);
+                seanceList.put(seance.getId(), seance);
             }
 
             statementSeance.close();
@@ -230,7 +230,7 @@ public class LoadTask implements Runnable {
         return salleList;
     }
 
-    public List<Seance> getSeanceList() {
+    public Map<Integer, Seance> getSeanceList() {
         return seanceList;
     }
 

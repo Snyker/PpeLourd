@@ -1,5 +1,6 @@
 package fr.dorian.content;
 
+import com.mysql.jdbc.Statement;
 import fr.dorian.Application;
 import fr.dorian.database.Database;
 
@@ -43,6 +44,11 @@ public class Seance implements ITable{
         final Map<String, Object> options = new HashMap<>();
         options.put("date_debut", date_debut);
         options.put("date_fin", date_fin);
+        options.put("id_classe", classe.getId());
+        options.put("id_personne",professeur.getId());
+        options.put("id_salle", salle.getId());
+
+        this.id_seance = database.insert("dbo.seance", options, Statement.RETURN_GENERATED_KEYS);
 
         return getId()>0;
     }
@@ -50,6 +56,14 @@ public class Seance implements ITable{
     @Override
     public int getId() {
         return id_seance;
+    }
+
+    public Date getDateDebut() {
+        return date_debut;
+    }
+
+    public Date getDateFin() {
+        return date_fin;
     }
 
     public Professeur getProfesseur() {

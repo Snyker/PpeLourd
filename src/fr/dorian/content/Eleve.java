@@ -1,14 +1,12 @@
 package fr.dorian.content;
 
-import fr.dorian.Application;
-
 import java.util.*;
 
 /**
  * Class créée le 11/03/2019 à 15:58
  * par Jullian Dorian
  */
-public class Eleve extends Entite {
+public class Eleve extends Personne {
 
     private final List<Parent> parents = new ArrayList<>(); //Liste des parents
 
@@ -55,9 +53,9 @@ public class Eleve extends Entite {
         boolean createEntite = super.register();
 
         final Map<Object, Object> keys = new HashMap<>();
-        keys.put("id_entite", getId());
+        keys.put("id_personne", getId());
 
-        boolean createEleve = this.database.insert("eleves", keys) == 1; //Si une ligne est crée c'est vrai
+        boolean createEleve = this.database.insert("dbo.eleves", keys) == 1; //Si une ligne est crée c'est vrai
 
         return createEntite && createEleve;
     }

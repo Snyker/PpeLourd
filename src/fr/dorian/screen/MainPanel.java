@@ -6,6 +6,7 @@ import fr.dorian.screen.panels.eleve.EleveMainPanel;
 import fr.dorian.screen.panels.parent.ParentMainPanel;
 import fr.dorian.screen.panels.professeur.ProfesseurMainPanel;
 import fr.dorian.screen.panels.salle.SalleMainPanel;
+import fr.dorian.screen.panels.seance.SeanceMainPanel;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicPanelUI;
@@ -64,6 +65,12 @@ public class MainPanel extends JPanel {
             mainScreen.changePanel(salleMainPanel);
         });
         add(gest_salle);
+        PrimaryButton gest_seance = new PrimaryButton("Gestion des séances");
+        gest_seance.addActionListener(e -> {
+            SeanceMainPanel seanceMainPanel = new SeanceMainPanel(mainScreen);
+            mainScreen.changePanel(seanceMainPanel);
+        });
+        add(gest_seance);
     }
 
 }

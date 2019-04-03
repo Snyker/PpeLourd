@@ -42,7 +42,7 @@ public class Classe implements ITable{
         final Map<String, Object> options = new HashMap<>();
         options.put("section", section);
 
-        this.id_classe = database.insert("classes", options, Statement.RETURN_GENERATED_KEYS);
+        this.id_classe = database.insert("dbo.classes", options, Statement.RETURN_GENERATED_KEYS);
         return getId() > 0;
     }
 

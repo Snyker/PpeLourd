@@ -25,7 +25,7 @@ public class SeanceMainPanel extends DefaultMainPanel {
         PrimaryButton liste = new PrimaryButton("Liste des séances");
         liste.addActionListener(e ->{
             if(currentFrame == null) {
-                //this.currentFrame = new SalleListFrame(this);
+                this.currentFrame = new SeanceListFrame(this);
             }
         });
         add(liste);
@@ -33,7 +33,7 @@ public class SeanceMainPanel extends DefaultMainPanel {
         PrimaryButton create = new PrimaryButton("Créer une séance");
         create.addActionListener(e ->{
             if(currentFrame == null) {
-                //this.currentFrame = new SeanceCreateFrame(this);
+                this.currentFrame = new SeanceCreateFrame(this);
             }
         });
         add(create);

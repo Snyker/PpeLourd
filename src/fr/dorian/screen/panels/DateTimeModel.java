@@ -23,6 +23,8 @@ public class DateTimeModel {
         properties.put("text.today", "Today");
         properties.put("text.month", "Month");
         properties.put("text.year", "Year");
+        properties.put("text.hour", "Hour");
+        properties.put("text.minute", "Minute");
 
         this.properties = properties;
     }

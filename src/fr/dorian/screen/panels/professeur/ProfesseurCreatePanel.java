@@ -35,7 +35,9 @@ public class ProfesseurCreatePanel extends JPanel{
         JDatePickerImpl date_naissance_field = new JDatePickerImpl(datePanel, new DateBornLabelFormatter());
         Label matiere = new Label("Matière *");
         JComboBox matiere_field = new JComboBox();
-        Application.getMatiereList().values().forEach(e -> {matiere_field.addItem(e);});
+        Application.getMatiereList().values().forEach(e->{
+            matiere_field.addItem(e);
+        });
 
         Label email = new Label("Email");
         PrimaryTextField email_field = new PrimaryTextField();

@@ -1,6 +1,9 @@
 package fr.dorian.screen.panels.seance;
 
 import fr.dorian.Application;
+import fr.dorian.content.Classe;
+import fr.dorian.content.Professeur;
+import fr.dorian.content.Salle;
 import fr.dorian.content.Seance;
 import fr.dorian.screen.fields.PrimaryButton;
 import fr.dorian.screen.fields.PrimaryTextField;
@@ -29,12 +32,39 @@ public class SeanceCreatePanel extends JPanel{
         JDatePanelImpl datePanel = new JDatePanelImpl(dateModel.getModel(), dateModel.getProp());
         JDatePickerImpl date_debut_field = new JDatePickerImpl(datePanel, new DateBornLabelFormatter());
         Label date_fin = new Label("Date de fin *");
-        JDatePickerImpl date_fin_field = new JDatePickerImpl(datePanel, new DateBornLabelFormatter());
+        DateTimeModel dateModel2 = new DateTimeModel();
+        JDatePanelImpl datePanel2 = new JDatePanelImpl(dateModel2.getModel(), dateModel2.getProp());
+        JDatePickerImpl date_fin_field = new JDatePickerImpl(datePanel2, new DateBornLabelFormatter());
+
+        Label classe = new Label("Classe");
+        JComboBox classe_field = new JComboBox();
+        Application.getClasseList().values().forEach(e ->{
+            classe_field.addItem(e);
+        });
+
+        Label professeur = new Label("Professeur");
+        JComboBox professeur_field = new JComboBox();
+        Application.getProfesseurList().values().forEach(e ->{
+            professeur_field.addItem(e);
+        });
+
+        Label salle = new Label("Salle");
+        JComboBox salle_field = new JComboBox();
+        Application.getSalleList().values().forEach(e ->{
+            salle_field.addItem(e);
+        });
 
         this.add(date_debut);
         this.add(date_debut_field);
         this.add(date_fin);
         this.add(date_fin_field);
+
+        add(classe);
+        add(classe_field);
+        add(professeur);
+        add(professeur_field);
+        add(salle);
+        add(salle_field);
 
         Label obg = new Label("* : Champs obligatoire");
         obg.setFont(new Font("SansSerif", Font.PLAIN, 9));
@@ -44,16 +74,61 @@ public class SeanceCreatePanel extends JPanel{
         PrimaryButton confirm = new PrimaryButton("Créer la salle");
         confirm.addActionListener(e -> {
 
-            final Seance seance = new Seance(0, (Date) date_debut_field.getModel().getValue(), (Date) date_fin_field.getModel().getValue());
+            final Date dateDebut = (Date) date_debut_field.getModel().getValue();
+            final Date dateFin = (Date) date_fin_field.getModel().getValue();
+            final Classe c = (Classe) classe_field.getSelectedItem();
+            final Professeur p = (Professeur) professeur_field.getSelectedItem();
+            final Salle s = (Salle) salle_field.getSelectedItem();
 
-         /*   if (seance.register()) {
-                Application.getSeanceList().put(seance.getId(), seance);
-                System.out.println("Bien enregistré");
-                //Fermer la fenetre
-                frame.dispose();
-            } else {
-                System.out.println("Impossible d'enregistrer");
-            }*/
+            boolean canCreate = true;
+
+            if(dateDebut == null || dateDebut.toString().isEmpty()) {
+                errorField(date_debut_field);
+                canCreate = false;
+            }else
+                resetField(date_debut_field);
+
+            if(dateFin == null || dateFin.toString().isEmpty()) {
+                errorField(date_fin_field);
+                canCreate = false;
+            }else
+                resetField(date_fin_field);
+
+            if(c == null) {
+                errorField(classe_field);
+                canCreate = false;
+            }else
+                resetField(classe_field);
+
+            if(p == null) {
+                errorField(professeur_field);
+                canCreate = false;
+            }else
+                resetField(professeur_field);
+
+            if(s == null) {
+                errorField(salle_field);
+                canCreate = false;
+            }else
+                resetField(salle_field);
+
+            if(canCreate){
+                final Seance seance = new Seance(0, dateDebut, dateFin);
+
+                seance.setClasse(c);
+                seance.setProfesseur(p);
+                seance.setSalle(s);
+
+                if(seance.register()){
+                    Application.getSeanceList().put(seance.getId(), seance);
+                    System.out.println("Bien enregistré");
+                    //Fermer la fenetre
+                    frame.dispose();
+                } else {
+                    System.out.println("Impossible d'enregistrer");
+                }
+
+            }
 
         });
 

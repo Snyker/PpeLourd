@@ -52,7 +52,7 @@ public class Salle implements ITable{
         options.put("n_etage", n_etage);
         options.put("nb_place", nb_place);
 
-        this.id_salle = database.insert("salles", options, Statement.RETURN_GENERATED_KEYS);
+        this.id_salle = database.insert("dbo.salles", options, Statement.RETURN_GENERATED_KEYS);
         return getId() > 0;
     }
 }

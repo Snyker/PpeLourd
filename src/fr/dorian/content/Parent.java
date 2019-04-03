@@ -8,7 +8,7 @@ import java.util.List;
  * Class créée le 11/03/2019 à 15:59
  * par Jullian Dorian
  */
-public class Parent extends Entite {
+public class Parent extends Personne {
 
     private List<Eleve> enfants = new ArrayList<>(); //Liste des enfants
 

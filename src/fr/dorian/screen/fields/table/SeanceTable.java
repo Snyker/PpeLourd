@@ -1,6 +1,7 @@
 package fr.dorian.screen.fields.table;
 
-import fr.dorian.content.Eleve;
+import fr.dorian.content.Salle;
+import fr.dorian.content.Seance;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -9,9 +10,9 @@ import javax.swing.table.AbstractTableModel;
  * Class créée le 13/03/2019 à 14:27
  * par Jullian Dorian
  */
-public class EleveTable extends JTable{
+public class SeanceTable extends JTable{
 
-    public EleveTable(Object[] objects) {
+    public SeanceTable(Object[] objects) {
         this.setModel(new Model(objects));
         getTableHeader().setReorderingAllowed(false);
     }
@@ -23,7 +24,7 @@ public class EleveTable extends JTable{
 
     private class Model extends AbstractTableModel {
 
-        private final String[] entete = {"#", "Nom", "Prénom", "Date de Naissance", "Email", "Téléphone"};
+        private final String[] entete = {"#", "Date de début", "Date de fin", "Professeur", "Classe", "N*Salle"};
         private final Object[] objects;
 
         public Model(Object[] list) {
@@ -72,21 +73,21 @@ public class EleveTable extends JTable{
          */
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            Eleve item = (Eleve) objects[rowIndex];
+            Seance item = (Seance) objects[rowIndex];
 
             switch (columnIndex) {
                 case 0:
                     return "    " + item.getId();
                 case 1:
-                    return item.getNom();
+                    return item.getDateDebut().toString();
                 case 2:
-                    return item.getPrenom();
+                    return item.getDateFin().toString();
                 case 3:
-                    return item.getDateNaissance().toString();
+                    return item.getProfesseur().getNom() + " " + item.getProfesseur().getPrenom();
                 case 4:
-                    return item.getEmail();
+                    return item.getClasse().getSection();
                 case 5:
-                    return item.getTelephone();
+                    return item.getSalle().getNSalle();
             }
 
             return "";

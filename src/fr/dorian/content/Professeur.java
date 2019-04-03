@@ -8,7 +8,7 @@ import java.util.Map;
  * Class créée le 11/03/2019 à 16:14
  * par Jullian Dorian
  */
-public class Professeur extends Entite{
+public class Professeur extends Personne {
 
     private Matiere matiere;
 
@@ -27,10 +27,10 @@ public class Professeur extends Entite{
         boolean createEntite = super.register();
 
         final Map<Object, Object> keys = new HashMap<>();
-        keys.put("id_entite", getId());
+        keys.put("id_personne", getId());
         keys.put("id_matiere", getMatiere().getId());
 
-        boolean createProf = this.database.insert("professeurs", keys) == 1; //Si une ligne est crée c'est vrai
+        boolean createProf = this.database.insert("dbo.professeurs", keys) == 1; //Si une ligne est crée c'est vrai
 
         return createEntite && createProf;
     }

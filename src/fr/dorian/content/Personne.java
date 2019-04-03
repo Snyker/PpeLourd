@@ -3,19 +3,16 @@ package fr.dorian.content;
 import fr.dorian.Application;
 import fr.dorian.database.Database;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Class créée le 11/03/2019 à 15:54
  * par Jullian Dorian
  */
-public class Entite implements ITable{
+public class Personne implements ITable{
 
     protected final Database database = Application.getDatabase();
 
@@ -26,14 +23,14 @@ public class Entite implements ITable{
     private String telephone = null;
     private String email = null;
 
-    public Entite(int id_entite, String nom, String prenom, Date date_naissance) {
+    public Personne(int id_entite, String nom, String prenom, Date date_naissance) {
         this.id_entite = id_entite;
         this.nom = nom;
         this.prenom = prenom;
         this.date_naissance = date_naissance;
     }
 
-    public Entite(int id_entite, String nom, String prenom, Date date_naissance,String telephone, String email){
+    public Personne(int id_entite, String nom, String prenom, Date date_naissance, String telephone, String email){
         this(id_entite, nom, prenom, date_naissance);
         this.telephone = telephone;
         this.email = email;
@@ -52,7 +49,7 @@ public class Entite implements ITable{
         __values.put("email", email);
         __values.put("telephone", telephone);
 
-        this.id_entite = database.insert("entite", __values, Statement.RETURN_GENERATED_KEYS);
+        this.id_entite = database.insert("dbo.personne", __values, Statement.RETURN_GENERATED_KEYS);
         return getId() > 0;
     }
 

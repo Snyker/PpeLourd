@@ -26,7 +26,7 @@ public class Application {
     private static Map<Integer, Matiere> matiereList;
     private static Map<Integer, Classe> classeList;
     private static Map<Integer, Salle> salleList;
-    private static List<Seance> seanceList;
+    private static Map<Integer, Seance> seanceList;
 
     /**
      * Launch the application
@@ -98,7 +98,7 @@ public class Application {
         return salleList;
     }
 
-    public static List<Seance> getSeanceList() {
+    public static Map<Integer, Seance> getSeanceList() {
         return seanceList;
     }
 

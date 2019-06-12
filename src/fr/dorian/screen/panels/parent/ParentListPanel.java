@@ -27,6 +27,8 @@ public class ParentListPanel extends JPanel{
         this.setUI(new BasicPanelUI());
         this.setLayout(new BorderLayout());
 
+        Database database = Application.getDatabase();
+
         ParentTable table = new ParentTable(Application.toTab(Application.getParentList().values()));
         table.setAutoCreateRowSorter(true);
 
@@ -38,7 +40,6 @@ public class ParentListPanel extends JPanel{
 
         JScrollPane jScrollPane = new JScrollPane(table);
         add(jScrollPane, BorderLayout.CENTER);
-
 
         JPanel westPanel = new JPanel();
         westPanel.setLayout(new FlowLayout());
@@ -61,28 +62,34 @@ public class ParentListPanel extends JPanel{
 
             if(parent != null) {
 
-                Database database = Application.getDatabase();
-                database.connectDb();
+                boolean confirm = JOptionPane.showConfirmDialog(this, "Êtes vous sûr de vouloir supprimer l'élève ?", "Confirmer", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
 
-                try {
-                    PreparedStatement statement = database.getConnection().prepareStatement(
-                            "DELETE FROM dbo.personne WHERE dbo.personne.id_personne = " + parent.getId());
+                if(confirm) {
 
-                    if(statement.executeUpdate() > 0) {
-                        //Suppression de la liste
-                        Application.getParentList().remove(parent.getId());
-                        table.removeFrom(parent.getId());
-                        table.updateUI();
+                    database.connectDb();
 
-                        JOptionPane.showMessageDialog(this, "Le parent a bien été supprimé.");
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Impossible de supprimer le parent.");
+                    try {
+                        PreparedStatement statement = database.getConnection().prepareStatement(
+                                "DELETE FROM dbo.personne WHERE dbo.personne.id_personne = " + parent.getId());
+
+                        if (statement.executeUpdate() > 0) {
+                            //Suppression de la liste
+                            Application.getParentList().remove(parent.getId());
+                            table.removeFrom(parent.getId());
+                            table.updateUI();
+
+                            JOptionPane.showMessageDialog(this, "Le parent a bien été supprimé.");
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Impossible de supprimer le parent.");
+                        }
+
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    } finally {
+                        database.disconnectDb();
                     }
-
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                } finally {
-                    database.disconnectDb();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Le parent n'a pas été supprimé.");
                 }
             }
         });

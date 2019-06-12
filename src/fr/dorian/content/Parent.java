@@ -1,5 +1,7 @@
 package fr.dorian.content;
 
+import fr.dorian.Application;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +28,7 @@ public class Parent extends Personne {
      */
     public void addEnfant(Eleve eleve) {
         enfants.add(eleve);
+
     }
 
     /**

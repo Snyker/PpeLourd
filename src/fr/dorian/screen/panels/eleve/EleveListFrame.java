@@ -17,15 +17,14 @@ public class EleveListFrame extends JFrame implements WindowListener {
         this.panel = panel;
 
         this.setTitle("Liste des élèves");
-        //this.setSize(new Dimension(500, 300));
         this.setResizable(false);
-        this.setPreferredSize(new Dimension(850, 450));
         this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
 
         this.add(new EleveListPanel(this));
 
         this.addWindowListener(this);
+        this.pack();
 
         this.setVisible(true);
 

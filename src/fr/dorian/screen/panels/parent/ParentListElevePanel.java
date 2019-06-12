@@ -74,6 +74,7 @@ public class ParentListElevePanel extends JPanel {
                     PreparedStatement statement = database.getConnection().prepareStatement("DELETE FROM avoir_parent WHERE id_personne="+selected.getId());
                     if(statement.executeUpdate() > 0) {
                         parent.removeEnfant(selected);
+                        Application.getEleveList().get(selected.getId()).removeParent(parent);
                         table.removeFrom(selected.getId());
                         table.updateUI();
                         JOptionPane.showMessageDialog(this, "L'enfant a bien été supprimé.");

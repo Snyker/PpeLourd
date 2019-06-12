@@ -18,8 +18,6 @@ public class EleveMainPanel extends DefaultMainPanel {
     public EleveMainPanel(MainScreen mainScreen){
         super("Gestion des élèves", mainScreen);
 
-        //setLayout(new GridLayout(0, 1, 25, 25));
-
         PrimaryButton liste = new PrimaryButton("Liste des élèves");
         liste.addActionListener(e ->{
             if(currentFrame == null) {
@@ -35,14 +33,6 @@ public class EleveMainPanel extends DefaultMainPanel {
             }
         });
         add(create);
-
-        PrimaryButton delete = new PrimaryButton("Supprimer un élève");
-        delete.addActionListener(e ->{
-            if(currentFrame == null) {
-                this.currentFrame = new EleveCreateFrame(this);
-            }
-        });
-        add(delete);
 
         final ActionListener backAction = this.back.getActionListeners()[0];
         this.back.removeActionListener(backAction);

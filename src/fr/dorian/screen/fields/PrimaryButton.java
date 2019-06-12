@@ -11,7 +11,7 @@ public class PrimaryButton extends JButton {
 
     public PrimaryButton(String text) {
         this.setText(text);
-        this.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        this.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
         this.setPreferredSize(new Dimension(200, 35));
     }
 

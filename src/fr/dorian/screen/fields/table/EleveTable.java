@@ -1,9 +1,13 @@
 package fr.dorian.screen.fields.table;
 
 import fr.dorian.content.Eleve;
+import fr.dorian.content.Parent;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class créée le 13/03/2019 à 14:27
@@ -21,13 +25,42 @@ public class EleveTable extends JTable{
         //On empêche le déplacement d'une colonne
     }
 
+    public Eleve getSelected() {
+        return ((Model) getModel()).getSelected();
+    }
+
+    /**
+     * On supprime une valeur
+     * @param id
+     */
+    public void removeFrom(int id) {
+        List<Object> list = new ArrayList<>();
+
+        for(int i = 0; i < ((EleveTable.Model) getModel()).getObjects().length; i++){
+            Eleve parent = (Eleve) ((EleveTable.Model) getModel()).getObjects()[i];
+            if(parent.getId() != id) {
+                list.add(parent);
+            }
+        }
+
+        ((EleveTable.Model) getModel()).setObjects(list.toArray());
+    }
+
     private class Model extends AbstractTableModel {
 
         private final String[] entete = {"#", "Nom", "Prénom", "Date de Naissance", "Email", "Téléphone"};
-        private final Object[] objects;
+        private Object[] objects;
 
         public Model(Object[] list) {
             this.objects = list;
+        }
+
+        Object[] getObjects() {
+            return objects;
+        }
+
+        void setObjects(Object[] objects) {
+            this.objects = objects;
         }
 
         /**
@@ -82,7 +115,8 @@ public class EleveTable extends JTable{
                 case 2:
                     return item.getPrenom();
                 case 3:
-                    return item.getDateNaissance().toString();
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+                    return simpleDateFormat.format(item.getDateNaissance().getTime());
                 case 4:
                     return item.getEmail();
                 case 5:
@@ -90,6 +124,10 @@ public class EleveTable extends JTable{
             }
 
             return "";
+        }
+
+        public Eleve getSelected() {
+            return (Eleve) this.objects[getSelectedRow()];
         }
     }
 }

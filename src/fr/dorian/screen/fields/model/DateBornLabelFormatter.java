@@ -1,4 +1,4 @@
-package fr.dorian.screen.panels;
+package fr.dorian.screen.fields.model;
 
 import javax.swing.*;
 import java.text.ParseException;
@@ -11,9 +11,12 @@ import java.util.Calendar;
  */
 public class DateBornLabelFormatter extends JFormattedTextField.AbstractFormatter {
 
+    private SimpleDateFormat dateFormatter;
 
-    private String datePattern = "yyyy-MM-dd";
-    private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
+    public DateBornLabelFormatter(){
+        String datePattern = "yyyy-MM-dd";
+        dateFormatter = new SimpleDateFormat(datePattern);
+    }
 
     @Override
     public Object stringToValue(String text) throws ParseException {

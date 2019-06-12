@@ -6,6 +6,8 @@ import fr.dorian.screen.panels.DefaultMainPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Class créée le 11/03/2019 à 23:21
@@ -13,12 +15,10 @@ import java.awt.event.ActionListener;
  */
 public class ParentMainPanel extends DefaultMainPanel {
 
-    protected JFrame currentFrame;
+    protected static JFrame currentFrame;
 
     public ParentMainPanel(MainScreen mainScreen){
         super("Gestion des parents", mainScreen);
-
-        //setLayout(new GridLayout(0, 1, 25, 25));
 
         PrimaryButton liste = new PrimaryButton("Liste des parents");
         liste.addActionListener(e ->{
@@ -36,14 +36,6 @@ public class ParentMainPanel extends DefaultMainPanel {
         });
         add(create);
 
-        PrimaryButton delete = new PrimaryButton("Supprimer un parent");
-        delete.addActionListener(e ->{
-            if(currentFrame == null) {
-                this.currentFrame = new ParentCreateFrame(this);
-            }
-        });
-        add(delete);
-
         final ActionListener backAction = this.back.getActionListeners()[0];
         this.back.removeActionListener(backAction);
         this.back.addActionListener(e -> {
@@ -56,5 +48,14 @@ public class ParentMainPanel extends DefaultMainPanel {
         this.setVisible(true);
     }
 
+    public static void open(Class<? extends JFrame> frame) {
 
+        try {
+            Constructor constructor = frame.getDeclaredConstructor(ParentMainPanel.class);
+            currentFrame = (JFrame) constructor.newInstance(new ParentMainPanel(mainScreen));
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

@@ -55,4 +55,9 @@ public class Salle implements ITable{
         this.id_salle = database.insert("dbo.salles", options, Statement.RETURN_GENERATED_KEYS);
         return getId() > 0;
     }
+
+    @Override
+    public String toString() {
+        return n_salle+ "";
+    }
 }

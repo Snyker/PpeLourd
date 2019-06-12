@@ -1,11 +1,11 @@
-package fr.dorian.screen.panels;
+package fr.dorian.screen.fields.model;
 
 import org.jdatepicker.impl.UtilDateModel;
 
 import java.util.Properties;
 
 /**
- * Class créée le 12/03/2019 à 14:22
+ * Class créée le 06/06/2019 à 11:28
  * par Jullian Dorian
  */
 public class DateTimeModel {
@@ -23,8 +23,6 @@ public class DateTimeModel {
         properties.put("text.today", "Today");
         properties.put("text.month", "Month");
         properties.put("text.year", "Year");
-        properties.put("text.hour", "Hour");
-        properties.put("text.minute", "Minute");
 
         this.properties = properties;
     }
@@ -36,4 +34,6 @@ public class DateTimeModel {
     public Properties getProp() {
         return properties;
     }
+
+
 }

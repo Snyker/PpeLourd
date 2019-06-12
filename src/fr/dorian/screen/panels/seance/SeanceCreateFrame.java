@@ -16,8 +16,8 @@ public class SeanceCreateFrame extends JFrame implements WindowListener {
     public SeanceCreateFrame(SeanceMainPanel panel) {
         this.panel = panel;
 
-        this.setTitle("Créer une classe");
-        this.setSize(new Dimension(480, 300));
+        this.setTitle("Créer une séance");
+        this.setSize(new Dimension(700, 500));
         this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
 

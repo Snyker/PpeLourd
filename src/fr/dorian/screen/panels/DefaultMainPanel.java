@@ -14,7 +14,7 @@ import java.awt.*;
  */
 public class DefaultMainPanel extends JPanel {
 
-    protected MainScreen mainScreen;
+    protected static MainScreen mainScreen;
     protected PrimaryButton back;
     protected Label title;
 

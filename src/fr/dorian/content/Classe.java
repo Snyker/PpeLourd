@@ -57,4 +57,9 @@ public class Classe implements ITable{
     public void removeEleve(Eleve eleve) {
         eleves.removeIf(filter -> (eleve.getId() == filter.getId()));
     }
+
+    @Override
+    public String toString() {
+         return section.replaceAll(" ", "");
+    }
 }

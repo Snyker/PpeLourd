@@ -6,11 +6,7 @@ import fr.dorian.content.Professeur;
 import fr.dorian.content.Salle;
 import fr.dorian.content.Seance;
 import fr.dorian.screen.fields.PrimaryButton;
-import fr.dorian.screen.fields.PrimaryTextField;
-import fr.dorian.screen.panels.DateBornLabelFormatter;
-import fr.dorian.screen.panels.DateTimeModel;
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
+import fr.dorian.screen.fields.model.SpinnerDateTimeModel;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicPanelUI;
@@ -27,14 +23,28 @@ public class SeanceCreatePanel extends JPanel{
         this.setUI(new BasicPanelUI());
         this.setLayout(new GridLayout(0, 2, 10, 10));
 
+        Date current = new Date();
+        current.setMinutes(0);
+        current.setSeconds(0);
+
         Label date_debut = new Label("Date de début *");
-        DateTimeModel dateModel = new DateTimeModel();
-        JDatePanelImpl datePanel = new JDatePanelImpl(dateModel.getModel(), dateModel.getProp());
-        JDatePickerImpl date_debut_field = new JDatePickerImpl(datePanel, new DateBornLabelFormatter());
+        SpinnerDateTimeModel dateTimeModel = new SpinnerDateTimeModel();
+        JSpinner dateModel = new JSpinner( dateTimeModel);
+        JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(dateModel, "YYYY-MM-dd HH:mm");
+        dateModel.setEditor(timeEditor);
+        dateModel.setValue(current); // will only show the current time
+
+
+        //DateTimeModel dateModel = new DateTimeModel();
+        //JDatePanelImpl datePanel = new JDatePanelImpl(dateModel.getModel(), dateModel.getProp());
+        //JDatePickerImpl date_debut_field = new JDatePickerImpl(datePanel, new DateBornLabelFormatter());
+
         Label date_fin = new Label("Date de fin *");
-        DateTimeModel dateModel2 = new DateTimeModel();
-        JDatePanelImpl datePanel2 = new JDatePanelImpl(dateModel2.getModel(), dateModel2.getProp());
-        JDatePickerImpl date_fin_field = new JDatePickerImpl(datePanel2, new DateBornLabelFormatter());
+        JSpinner dateModel2 = new JSpinner( new SpinnerDateModel() );
+        JSpinner.DateEditor timeEditor2 = new JSpinner.DateEditor(dateModel2, "YYYY-MM-dd HH:mm");
+        dateModel2.setEditor(timeEditor2);
+        current.setHours(current.getHours()+1);
+        dateModel2.setValue(current); // will only show the current time
 
         Label classe = new Label("Classe");
         JComboBox classe_field = new JComboBox();
@@ -55,9 +65,9 @@ public class SeanceCreatePanel extends JPanel{
         });
 
         this.add(date_debut);
-        this.add(date_debut_field);
+        this.add(dateModel);
         this.add(date_fin);
-        this.add(date_fin_field);
+        this.add(dateModel2);
 
         add(classe);
         add(classe_field);
@@ -69,13 +79,13 @@ public class SeanceCreatePanel extends JPanel{
         Label obg = new Label("* : Champs obligatoire");
         obg.setFont(new Font("SansSerif", Font.PLAIN, 9));
         this.add(obg);
-        this.add(new Label());
+        this.add(new Label(null));
 
         PrimaryButton confirm = new PrimaryButton("Créer la salle");
         confirm.addActionListener(e -> {
 
-            final Date dateDebut = (Date) date_debut_field.getModel().getValue();
-            final Date dateFin = (Date) date_fin_field.getModel().getValue();
+            final Date dateDebut = (Date) dateModel.getModel().getValue();
+            final Date dateFin = (Date) dateModel2.getModel().getValue();
             final Classe c = (Classe) classe_field.getSelectedItem();
             final Professeur p = (Professeur) professeur_field.getSelectedItem();
             final Salle s = (Salle) salle_field.getSelectedItem();
@@ -83,16 +93,16 @@ public class SeanceCreatePanel extends JPanel{
             boolean canCreate = true;
 
             if(dateDebut == null || dateDebut.toString().isEmpty()) {
-                errorField(date_debut_field);
+                errorField(dateModel);
                 canCreate = false;
             }else
-                resetField(date_debut_field);
+                resetField(dateModel);
 
             if(dateFin == null || dateFin.toString().isEmpty()) {
-                errorField(date_fin_field);
+                errorField(dateModel2);
                 canCreate = false;
             }else
-                resetField(date_fin_field);
+                resetField(dateModel2);
 
             if(c == null) {
                 errorField(classe_field);
@@ -113,14 +123,10 @@ public class SeanceCreatePanel extends JPanel{
                 resetField(salle_field);
 
             if(canCreate){
-                final Seance seance = new Seance(0, dateDebut, dateFin);
-
-                seance.setClasse(c);
-                seance.setProfesseur(p);
-                seance.setSalle(s);
+                final Seance seance = new Seance(dateDebut.getTime(), dateFin.getTime(), p, c, s);
 
                 if(seance.register()){
-                    Application.getSeanceList().put(seance.getId(), seance);
+                    Application.getSeanceList().put(Application.getSeanceList().size()+1, seance);
                     System.out.println("Bien enregistré");
                     //Fermer la fenetre
                     frame.dispose();

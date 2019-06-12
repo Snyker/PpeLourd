@@ -4,6 +4,8 @@ import fr.dorian.Application;
 import fr.dorian.database.Database;
 
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +14,7 @@ import java.util.Map;
  * Class créée le 11/03/2019 à 15:54
  * par Jullian Dorian
  */
-public class Personne implements ITable{
+public abstract class Personne implements ITable{
 
     protected final Database database = Application.getDatabase();
 

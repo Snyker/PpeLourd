@@ -4,6 +4,7 @@ import fr.dorian.content.*;
 import fr.dorian.database.Database;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -186,16 +187,23 @@ public class LoadTask implements Runnable {
 
             while(resultSet.next()) {
 
+                Date sqlDateSta = new Date(resultSet.getLong("date_debut"));
+                Date sqlDateEnd = new Date(resultSet.getLong("date_fin"));
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(sqlDateSta.getTime());
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.setTimeInMillis(sqlDateEnd.getTime());
+
                 Seance seance = new Seance(
-                        resultSet.getInt("id_seance"),
-                        resultSet.getDate("date_debut"),
-                        resultSet.getDate("date_fin"),
+                        calendar,
+                        calendar1,
                         professeurList.get(resultSet.getInt("id_personne")),
                         classeList.get(resultSet.getInt("id_classe")),
                         salleList.get(resultSet.getInt("id_salle"))
                 );
 
-                seanceList.put(seance.getId(), seance);
+                seanceList.put(seanceList.size()+1, seance);
             }
 
             statementSeance.close();

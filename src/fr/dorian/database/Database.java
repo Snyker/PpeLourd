@@ -1,6 +1,7 @@
 package fr.dorian.database;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
+import fr.dorian.content.Eleve;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -86,12 +87,29 @@ public class Database {
     REQUESTS
      */
 
-    public <T> Collection<? extends T> select(String table) {
+    public <T> Collection<? extends T> select(String request, T lambda) {
 
         final Collection<T> collection = new ArrayList<>();
 
         connectDb();
 
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(request);
+            if(preparedStatement.execute()) {
+
+                ResultSet resultSet = preparedStatement.getResultSet();
+
+                while(resultSet.next()) {
+
+
+
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         disconnectDb();
 

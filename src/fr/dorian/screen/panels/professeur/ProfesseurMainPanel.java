@@ -3,7 +3,6 @@ package fr.dorian.screen.panels.professeur;
 import fr.dorian.screen.MainScreen;
 import fr.dorian.screen.fields.PrimaryButton;
 import fr.dorian.screen.panels.DefaultMainPanel;
-import fr.dorian.screen.panels.eleve.EleveListFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;

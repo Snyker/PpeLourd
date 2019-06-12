@@ -4,6 +4,7 @@ import fr.dorian.content.Professeur;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.text.SimpleDateFormat;
 
 /**
  * Class créée le 13/03/2019 à 14:27
@@ -84,7 +85,8 @@ public class ProfesseurTable extends JTable{
                 case 3:
                     return professeur.getMatiere().getLabel();
                 case 4:
-                    return professeur.getDateNaissance().toString();
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+                    return simpleDateFormat.format(professeur.getDateNaissance().getTime());
                 case 5:
                     return professeur.getEmail();
                 case 6:

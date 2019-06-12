@@ -32,7 +32,16 @@ public class Parent extends Personne {
      * Supprime un enfant de la liste des enfants du parent si celui-ci existe
      * @param eleve
      */
-    public void removeParent(Eleve eleve){
+    public void removeEnfant(Eleve eleve){
         enfants.removeIf(filter -> (eleve.getId() == filter.getId()));
+    }
+
+    public List<Eleve> getEnfants() {
+        return enfants;
+    }
+
+    @Override
+    public String toString() {
+        return getNom() + " " + getPrenom();
     }
 }

@@ -21,7 +21,7 @@ public class SeanceListFrame extends JFrame implements WindowListener {
         this.setTitle("Liste des séances");
         //this.setSize(new Dimension(500, 300));
         this.setResizable(false);
-        this.setPreferredSize(new Dimension(550, 450));
+        this.setPreferredSize(new Dimension(750, 450));
         this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
 

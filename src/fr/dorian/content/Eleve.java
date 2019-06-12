@@ -59,4 +59,9 @@ public class Eleve extends Personne {
 
         return createEntite && createEleve;
     }
+
+    @Override
+    public String toString() {
+        return getNom() + " " + getPrenom();
+    }
 }

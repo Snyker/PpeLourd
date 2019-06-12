@@ -1,4 +1,4 @@
-package fr.dorian.screen.panels;
+package fr.dorian.screen.fields.model;
 
 import org.jdatepicker.impl.UtilDateModel;
 

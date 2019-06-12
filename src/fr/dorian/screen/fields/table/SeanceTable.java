@@ -1,10 +1,10 @@
 package fr.dorian.screen.fields.table;
 
-import fr.dorian.content.Salle;
 import fr.dorian.content.Seance;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.text.SimpleDateFormat;
 
 /**
  * Class créée le 13/03/2019 à 14:27
@@ -77,11 +77,13 @@ public class SeanceTable extends JTable{
 
             switch (columnIndex) {
                 case 0:
-                    return "    " + item.getId();
+                    return "    " + (rowIndex+1);
                 case 1:
-                    return item.getDateDebut().toString();
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm");
+                    return simpleDateFormat.format(item.getDateDebut().getTime().getTime());
                 case 2:
-                    return item.getDateFin().toString();
+                    simpleDateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm");
+                    return simpleDateFormat.format(item.getDateFin().getTime());
                 case 3:
                     return item.getProfesseur().getNom() + " " + item.getProfesseur().getPrenom();
                 case 4:

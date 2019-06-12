@@ -38,4 +38,9 @@ public class Professeur extends Personne {
     public Matiere getMatiere() {
         return matiere;
     }
+
+    @Override
+    public String toString() {
+        return getNom() + " " + getPrenom() + " | " + getMatiere();
+    }
 }

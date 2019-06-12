@@ -4,8 +4,8 @@ import fr.dorian.Application;
 import fr.dorian.content.Parent;
 import fr.dorian.screen.fields.PrimaryButton;
 import fr.dorian.screen.fields.PrimaryTextField;
-import fr.dorian.screen.panels.DateBornLabelFormatter;
-import fr.dorian.screen.panels.DateBornModel;
+import fr.dorian.screen.fields.model.DateBornLabelFormatter;
+import fr.dorian.screen.fields.model.DateBornModel;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 
@@ -26,14 +26,18 @@ public class ParentCreatePanel extends JPanel{
 
         Label name = new Label("Nom de famille *");
         PrimaryTextField name_field = new PrimaryTextField();
+
         Label surname = new Label("Prénom *");
         PrimaryTextField surname_field = new PrimaryTextField();
+
         Label date_naissance = new Label("Date de naissance *");
         DateBornModel dateModel = new DateBornModel();
         JDatePanelImpl datePanel = new JDatePanelImpl(dateModel.getModel(), dateModel.getProp());
         JDatePickerImpl date_naissance_field = new JDatePickerImpl(datePanel, new DateBornLabelFormatter());
+
         Label email = new Label("Email");
         PrimaryTextField email_field = new PrimaryTextField();
+
         Label telephone = new Label("Téléphone");
         PrimaryTextField telephone_field = new PrimaryTextField();
         this.add(name);

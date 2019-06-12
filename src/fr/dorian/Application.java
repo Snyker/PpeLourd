@@ -49,11 +49,6 @@ public class Application {
         database = new Database(Database.DRIVER_SQLSERVER, "localhost", 1433, "ppe_lourd", "IFU-NC4OKL4\\Arkas", "");
         System.out.println("Base de données : OK");
 
-        //Lancement de la fenetre
-        System.out.println("Ouverture de la fenêtre...");
-        this.mainScreen = new MainScreen();
-        System.out.println("Ouverture : OK");
-
         System.out.println("Chargement des données en arrière plan...");
         LoadTask loadTask = new LoadTask(database);
         loadTask.run();
@@ -68,6 +63,10 @@ public class Application {
 
         System.out.println("Chargement : OK");
 
+        //Lancement de la fenetre
+        System.out.println("Ouverture de la fenêtre...");
+        this.mainScreen = new MainScreen();
+        System.out.println("Ouverture : OK");
     }
 
     public static Database getDatabase(){

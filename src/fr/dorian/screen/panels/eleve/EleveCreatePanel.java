@@ -4,8 +4,8 @@ import fr.dorian.Application;
 import fr.dorian.content.Eleve;
 import fr.dorian.screen.fields.PrimaryButton;
 import fr.dorian.screen.fields.PrimaryTextField;
-import fr.dorian.screen.panels.DateBornLabelFormatter;
-import fr.dorian.screen.panels.DateBornModel;
+import fr.dorian.screen.fields.model.DateBornLabelFormatter;
+import fr.dorian.screen.fields.model.DateBornModel;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 

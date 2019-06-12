@@ -21,7 +21,7 @@ public class SeanceListPanel extends JPanel{
         SeanceTable table = new SeanceTable(Application.toTab(Application.getSeanceList().values()));
 
         JScrollPane jScrollPane = new JScrollPane(table);
-        jScrollPane.setPreferredSize(new Dimension(550, 350));
+        jScrollPane.setPreferredSize(new Dimension(750, 350));
         add(jScrollPane, BorderLayout.NORTH);
 
         frame.pack();

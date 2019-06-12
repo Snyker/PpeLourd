@@ -19,15 +19,14 @@ public class ProfesseurListFrame extends JFrame implements WindowListener {
         this.panel = panel;
 
         this.setTitle("Liste des professeurs");
-        //this.setSize(new Dimension(500, 300));
-        this.setResizable(false);
-        this.setPreferredSize(new Dimension(850, 450));
         this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
 
         this.add(new ProfesseurListPanel(this));
 
         this.addWindowListener(this);
+
+        this.pack();
 
         this.setVisible(true);
 

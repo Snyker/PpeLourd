@@ -109,7 +109,7 @@ public class EleveTable extends JTable{
 
             switch (columnIndex) {
                 case 0:
-                    return "    " + item.getId();
+                    return item.getId();
                 case 1:
                     return item.getNom();
                 case 2:

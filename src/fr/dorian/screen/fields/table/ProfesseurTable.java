@@ -5,6 +5,8 @@ import fr.dorian.content.Professeur;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class créée le 13/03/2019 à 14:27
@@ -22,14 +24,44 @@ public class ProfesseurTable extends JTable{
         //On empêche le déplacement d'une colonne
     }
 
-    private class Model extends AbstractTableModel {
+    public Professeur getSelected() {
+        return ((Model) getModel()).getSelected();
+    }
+
+    /**
+     * On supprime une valeur
+     * @param id
+     */
+    public void removeFrom(int id) {
+        List<Object> list = new ArrayList<>();
+
+        for(int i = 0; i < ((ProfesseurTable.Model) getModel()).getObjects().length; i++){
+            Professeur professeur = (Professeur) ((ProfesseurTable.Model) getModel()).getObjects()[i];
+            if(professeur.getId() != id) {
+                list.add(professeur);
+            }
+        }
+
+        ((ProfesseurTable.Model) getModel()).setObjects(list.toArray());
+    }
+
+    public class Model extends AbstractTableModel {
 
         private final String[] entete = {"#", "Nom", "Prénom", "Matière", "Date de Naissance", "Email", "Téléphone"};
-        private final Object[] objects;
+        private Object[] objects;
 
         public Model(Object[] list) {
             this.objects = list;
         }
+
+        Object[] getObjects() {
+            return objects;
+        }
+
+        void setObjects(Object[] objects) {
+            this.objects = objects;
+        }
+
 
         /**
          * Returns the number of rows in the model. A
@@ -77,7 +109,7 @@ public class ProfesseurTable extends JTable{
 
             switch (columnIndex) {
                 case 0:
-                    return "    " + professeur.getId();
+                    return professeur.getId();
                 case 1:
                     return professeur.getNom();
                 case 2:
@@ -94,6 +126,10 @@ public class ProfesseurTable extends JTable{
             }
 
             return "";
+        }
+
+        public Professeur getSelected() {
+            return (Professeur) this.objects[getSelectedRow()];
         }
     }
 }

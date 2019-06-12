@@ -36,14 +36,6 @@ public class ClasseMainPanel extends DefaultMainPanel {
         });
         add(create);
 
-        PrimaryButton delete = new PrimaryButton("Supprimer un classe");
-        delete.addActionListener(e ->{
-            if(currentFrame == null) {
-                //this.currentFrame = new ParentCreateFrame(this);
-            }
-        });
-        add(delete);
-
         final ActionListener backAction = this.back.getActionListeners()[0];
         this.back.removeActionListener(backAction);
         this.back.addActionListener(e -> {

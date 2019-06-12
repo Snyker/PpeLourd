@@ -17,13 +17,14 @@ public class ProfesseurCreateFrame extends JFrame implements WindowListener {
         this.panel = panel;
 
         this.setTitle("Créer un professeur");
-        this.setSize(new Dimension(480, 400));
         this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
 
         this.add(new ProfesseurCreatePanel(this));
 
         this.addWindowListener(this);
+
+        this.pack();
 
         this.setVisible(true);
 

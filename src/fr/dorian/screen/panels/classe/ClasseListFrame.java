@@ -17,15 +17,14 @@ public class ClasseListFrame extends JFrame implements WindowListener {
         this.panel = panel;
 
         this.setTitle("Liste des classes");
-        //this.setSize(new Dimension(500, 300));
-        this.setResizable(false);
-        this.setPreferredSize(new Dimension(450, 450));
         this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
 
         this.add(new ClasseListPanel(this));
 
         this.addWindowListener(this);
+
+        this.pack();
 
         this.setVisible(true);
 

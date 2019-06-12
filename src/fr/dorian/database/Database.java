@@ -1,13 +1,8 @@
 package fr.dorian.database;
 
-import com.microsoft.sqlserver.jdbc.SQLServerDriver;
-import fr.dorian.content.Eleve;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 
 /**
  * Class créée le 13/02/2019 à 14:35
@@ -286,5 +281,51 @@ public class Database {
             index++;
         }
 
+    }
+
+    private String convert(Object[] objects) {
+        return convert(objects, true);
+    }
+
+    private String convert(Object[] objects, boolean useAnd) {
+        StringBuilder builder = new StringBuilder();
+
+        for(int i = 0; i < objects.length; i++) {
+            Object o = objects[i];
+            if(i % 2 == 0) {
+                builder.append((String) o).append("=");
+            } else {
+                builder.append(o.toString());
+            }
+
+            if(i != 0 && i % 2 == 0 && i != objects.length-1) {
+                if(useAnd) builder.append(" AND ");
+                else builder.append(", ");
+            }
+
+        }
+
+        return builder.toString();
+    }
+
+    public boolean update(String table, Object[] objects, Object[] objects1) {
+        String set = convert(objects, false);
+        String where = convert(objects1);
+
+        boolean ret = false;
+
+        connectDb();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE "+table+" SET "+ set + " WHERE " + where);
+            ret = statement.executeUpdate()>0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnectDb();
+        }
+
+        return ret;
     }
 }

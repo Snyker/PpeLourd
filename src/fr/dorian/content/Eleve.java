@@ -12,6 +12,8 @@ public class Eleve extends Personne {
 
     private String groupe = "";
 
+    private Classe classe;
+
     public Eleve(int id_entite, String nom, String prenom, Date date_naissance) {
         super(id_entite, nom, prenom, date_naissance);
     }
@@ -46,6 +48,14 @@ public class Eleve extends Personne {
 
     public String getGroupe() {
         return groupe;
+    }
+
+    public void setClasse(Classe classe) {
+        this.classe = classe;
+    }
+
+    public Classe getClasse() {
+        return classe;
     }
 
     @Override

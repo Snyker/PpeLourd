@@ -53,7 +53,7 @@ public class LoadTask implements Runnable {
 
         try {
             //Chargement des eleves
-            final PreparedStatement statementEleve = connection.prepareStatement("SELECT e.* FROM dbo.eleves INNER JOIN dbo.personne e on eleves.id_personne = e.id_personne");
+            final PreparedStatement statementEleve = connection.prepareStatement("SELECT e.*, groupe FROM dbo.eleves INNER JOIN dbo.personne e on eleves.id_personne = e.id_personne");
             ResultSet resultSet = statementEleve.executeQuery();
 
             while(resultSet.next()) {
@@ -65,7 +65,7 @@ public class LoadTask implements Runnable {
                         resultSet.getString(5),
                         resultSet.getString(6)
                 );
-
+                eleve.setGroupe(resultSet.getString(7));
                 this.eleveList.put(eleve.getId(), eleve);
             }
             statementEleve.close();
@@ -172,11 +172,11 @@ public class LoadTask implements Runnable {
 
             while(resultSet.next()) {
 
-                String groupe = resultSet.getString("groupe");
+                //String groupe = resultSet.getString("groupe");
                 Eleve eleve = eleveList.get(resultSet.getInt("id_personne"));
                 Classe classe = classeList.get(resultSet.getInt("id_classe"));
 
-                eleve.setGroupe(groupe);
+                eleve.setClasse(classe);
                 classe.addEleve(eleve);
             }
 

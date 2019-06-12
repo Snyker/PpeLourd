@@ -6,22 +6,20 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Class créée le 23/03/2019 à 17:31
+ * Class créée le 12/06/2019 à 13:45
  * par Jullian Dorian
  */
-public class ClasseAddEleveFrame extends JFrame {
+public class ClasseListEleveFrame extends JFrame {
 
-    public ClasseAddEleveFrame(Classe classe){
-        super("Choisir un élève");
+    public ClasseListEleveFrame(Classe classe) {
+        super("Liste des élèves dans la classe");
 
         this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
-        this.add(new ClasseAddElevePanel(this, classe));
+        this.add(new ClasseListElevePanel(this, classe));
         this.pack();
 
         this.setVisible(true);
     }
-
-
 
 }

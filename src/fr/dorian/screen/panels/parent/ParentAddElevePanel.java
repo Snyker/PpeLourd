@@ -67,7 +67,7 @@ public class ParentAddElevePanel extends JPanel {
                 if(database.insert("dbo.avoir_parent", objectMap) > 0) {
                     parent.addEnfant(selected);
                     Application.getEleveList().get(selected.getId()).addParent(parent);
-                    JOptionPane.showMessageDialog(this, "L'enfanta été ajouté au parent.");
+                    JOptionPane.showMessageDialog(this, "L'enfant a été ajouté au parent.");
                     frame.dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Impossible d'ajouter l'enfant au parent.");

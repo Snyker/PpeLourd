@@ -4,6 +4,8 @@ import fr.dorian.content.Classe;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class créée le 13/03/2019 à 14:27
@@ -21,13 +23,42 @@ public class ClasseTable extends JTable{
         //On empêche le déplacement d'une colonne
     }
 
-    private class Model extends AbstractTableModel {
+    public Classe getSelected() {
+        return ((ClasseTable.Model) getModel()).getSelected();
+    }
+
+    /**
+     * On supprime une valeur
+     * @param id
+     */
+    public void removeFrom(int id) {
+        List<Object> list = new ArrayList<>();
+
+        for(int i = 0; i < ((ClasseTable.Model) getModel()).getObjects().length; i++){
+            Classe parent = (Classe) ((ClasseTable.Model) getModel()).getObjects()[i];
+            if(parent.getId() != id) {
+                list.add(parent);
+            }
+        }
+
+        ((ClasseTable.Model) getModel()).setObjects(list.toArray());
+    }
+
+    public class Model extends AbstractTableModel {
 
         private final String[] entete = {"#", "Section", "Nb Élève"};
-        private final Object[] objects;
+        private Object[] objects;
 
         public Model(Object[] list) {
             this.objects = list;
+        }
+
+        Object[] getObjects() {
+            return objects;
+        }
+
+        void setObjects(Object[] objects) {
+            this.objects = objects;
         }
 
         /**
@@ -76,7 +107,7 @@ public class ClasseTable extends JTable{
 
             switch (columnIndex) {
                 case 0:
-                    return "    " + item.getId();
+                    return item.getId();
                 case 1:
                     return item.getSection();
                 case 2:
@@ -84,6 +115,10 @@ public class ClasseTable extends JTable{
             }
 
             return "";
+        }
+
+        public Classe getSelected() {
+            return (Classe) this.objects[getSelectedRow()];
         }
     }
 }

@@ -48,7 +48,7 @@ public class EleveTable extends JTable{
 
     private class Model extends AbstractTableModel {
 
-        private final String[] entete = {"#", "Nom", "Prénom", "Date de Naissance", "Email", "Téléphone"};
+        private final String[] entete = {"#", "Nom", "Prénom", "Date de Naissance", "Email", "Téléphone", "Classe", "Groupe"};
         private Object[] objects;
 
         public Model(Object[] list) {
@@ -121,6 +121,10 @@ public class EleveTable extends JTable{
                     return item.getEmail();
                 case 5:
                     return item.getTelephone();
+                case 6:
+                    return item.getClasse() == null ? "No.Classe" : item.getClasse().getSection();
+                case 7:
+                    return item.getGroupe();
             }
 
             return "";

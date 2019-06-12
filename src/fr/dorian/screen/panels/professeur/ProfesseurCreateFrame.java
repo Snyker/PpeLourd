@@ -17,7 +17,6 @@ public class ProfesseurCreateFrame extends JFrame implements WindowListener {
         this.panel = panel;
 
         this.setTitle("Créer un professeur");
-        this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
 
         this.add(new ProfesseurCreatePanel(this));
@@ -26,7 +25,9 @@ public class ProfesseurCreateFrame extends JFrame implements WindowListener {
 
         this.pack();
 
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
+
 
     }
 

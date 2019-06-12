@@ -48,14 +48,4 @@ public class ParentMainPanel extends DefaultMainPanel {
         this.setVisible(true);
     }
 
-    public static void open(Class<? extends JFrame> frame) {
-
-        try {
-            Constructor constructor = frame.getDeclaredConstructor(ParentMainPanel.class);
-            currentFrame = (JFrame) constructor.newInstance(new ParentMainPanel(mainScreen));
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-
-    }
 }

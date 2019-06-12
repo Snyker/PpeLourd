@@ -16,18 +16,18 @@ public class ClasseCreateFrame extends JFrame implements WindowListener {
     private ClasseMainPanel panel;
 
     public ClasseCreateFrame(ClasseMainPanel panel) {
+        super("Créer une classe");
         this.panel = panel;
 
-        this.setTitle("Créer une classe");
-        this.setSize(new Dimension(480, 200));
-        this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
-
         this.add(new ClasseCreatePanel(this));
 
         this.addWindowListener(this);
+        this.pack();
 
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
+
 
     }
 

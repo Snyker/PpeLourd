@@ -14,12 +14,13 @@ public class ParentAddEleveFrame extends JFrame {
     public ParentAddEleveFrame(Parent selected) {
         super("Choisir un enfant");
 
-        this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
         this.add(new ParentAddElevePanel(this, selected));
         this.pack();
 
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
+
     }
 
 }

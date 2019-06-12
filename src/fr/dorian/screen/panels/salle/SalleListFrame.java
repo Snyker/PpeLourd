@@ -14,19 +14,18 @@ public class SalleListFrame extends JFrame implements WindowListener {
     private SalleMainPanel panel;
 
     public SalleListFrame(SalleMainPanel panel) {
+        super("Liste des salles");
         this.panel = panel;
 
-        this.setTitle("Liste des salles");
-        //this.setSize(new Dimension(500, 300));
-        this.setResizable(false);
-        this.setPreferredSize(new Dimension(550, 450));
-        this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
 
         this.add(new SalleListPanel(this));
 
         this.addWindowListener(this);
 
+        this.pack();
+
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
 
     }

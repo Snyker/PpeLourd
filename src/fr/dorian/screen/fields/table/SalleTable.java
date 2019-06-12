@@ -4,6 +4,8 @@ import fr.dorian.content.Salle;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class créée le 13/03/2019 à 14:27
@@ -21,13 +23,42 @@ public class SalleTable extends JTable{
         //On empêche le déplacement d'une colonne
     }
 
+    public Salle getSelected() {
+        return ((Model) getModel()).getSelected();
+    }
+
+    /**
+     * On supprime une valeur
+     * @param id
+     */
+    public void removeFrom(int id) {
+        List<Object> list = new ArrayList<>();
+
+        for(int i = 0; i < ((SalleTable.Model) getModel()).getObjects().length; i++){
+            Salle professeur = (Salle) ((SalleTable.Model) getModel()).getObjects()[i];
+            if(professeur.getId() != id) {
+                list.add(professeur);
+            }
+        }
+
+        ((SalleTable.Model) getModel()).setObjects(list.toArray());
+    }
+
     private class Model extends AbstractTableModel {
 
         private final String[] entete = {"#", "Etage", "Salle", "Place max"};
-        private final Object[] objects;
+        private Object[] objects;
 
         public Model(Object[] list) {
             this.objects = list;
+        }
+
+        Object[] getObjects() {
+            return objects;
+        }
+
+        void setObjects(Object[] objects) {
+            this.objects = objects;
         }
 
         /**
@@ -76,7 +107,7 @@ public class SalleTable extends JTable{
 
             switch (columnIndex) {
                 case 0:
-                    return "    " + item.getId();
+                    return item.getId();
                 case 1:
                     return "n* "+item.getNEtage();
                 case 2:
@@ -86,6 +117,10 @@ public class SalleTable extends JTable{
             }
 
             return "";
+        }
+
+        public Salle getSelected() {
+            return (Salle) this.objects[getSelectedRow()];
         }
     }
 }

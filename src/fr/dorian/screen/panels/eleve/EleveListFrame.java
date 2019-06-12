@@ -14,11 +14,9 @@ public class EleveListFrame extends JFrame implements WindowListener {
     private EleveMainPanel panel;
 
     public EleveListFrame(EleveMainPanel panel) {
+        super("Liste des élèves");
         this.panel = panel;
 
-        this.setTitle("Liste des élèves");
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
 
         this.add(new EleveListPanel(this));
@@ -26,7 +24,9 @@ public class EleveListFrame extends JFrame implements WindowListener {
         this.addWindowListener(this);
         this.pack();
 
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
+
 
     }
 

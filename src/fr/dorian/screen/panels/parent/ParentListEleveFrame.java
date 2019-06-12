@@ -14,13 +14,14 @@ public class ParentListEleveFrame extends JFrame {
     public ParentListEleveFrame(Parent parent) {
         super("Liste des enfants");
 
-        this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
 
         this.add(new ParentListElevePanel(this, parent));
         this.pack();
 
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
+
     }
 
 }

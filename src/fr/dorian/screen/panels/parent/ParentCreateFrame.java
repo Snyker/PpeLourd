@@ -14,16 +14,17 @@ public class ParentCreateFrame extends JFrame implements WindowListener {
     private ParentMainPanel panel;
 
     public ParentCreateFrame(ParentMainPanel panel) {
+        super("Créer un parent");
         this.panel = panel;
 
-        this.setTitle("Créer un parent");
-        this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
         this.add(new ParentCreatePanel(this));
-        this.pack();
         this.addWindowListener(this);
+        this.pack();
 
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
+
 
     }
 

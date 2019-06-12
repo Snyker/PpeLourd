@@ -14,17 +14,17 @@ public class ParentListFrame extends JFrame implements WindowListener {
     private ParentMainPanel panel;
 
     public ParentListFrame(ParentMainPanel panel) {
+        super("Liste des parents");
         this.panel = panel;
 
-        this.setTitle("Liste des parents");
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
         this.add(new ParentListPanel(this));
-        this.pack();
         this.addWindowListener(this);
+        this.pack();
 
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
+
 
     }
 

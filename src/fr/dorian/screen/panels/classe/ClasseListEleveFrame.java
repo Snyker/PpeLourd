@@ -14,12 +14,13 @@ public class ClasseListEleveFrame extends JFrame {
     public ClasseListEleveFrame(Classe classe) {
         super("Liste des élèves dans la classe");
 
-        this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
         this.add(new ClasseListElevePanel(this, classe));
         this.pack();
 
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
+
     }
 
 }

@@ -14,18 +14,19 @@ public class EleveCreateFrame extends JFrame implements WindowListener {
     private EleveMainPanel panel;
 
     public EleveCreateFrame(EleveMainPanel panel) {
+        super("Créer un élève");
         this.panel = panel;
 
-        this.setTitle("Créer un élève");
-        this.setSize(new Dimension(480, 360));
-        this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
 
         this.add(new EleveCreatePanel(this));
 
         this.addWindowListener(this);
+        this.pack();
 
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
+
 
     }
 

@@ -1,10 +1,13 @@
 package fr.dorian.screen.fields.table;
 
+import fr.dorian.content.Salle;
 import fr.dorian.content.Seance;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class créée le 13/03/2019 à 14:27
@@ -22,13 +25,42 @@ public class SeanceTable extends JTable{
         //On empêche le déplacement d'une colonne
     }
 
+    public Seance getSelected() {
+        return ((Model) getModel()).getSelected();
+    }
+
+    /**
+     * On supprime une valeur
+     * @param selectedRow
+     */
+    public void removeFrom(int selectedRow) {
+        List<Object> list = new ArrayList<>();
+
+        for(int i = 0; i < ((SeanceTable.Model) getModel()).getObjects().length; i++){
+            Seance seance = (Seance) ((SeanceTable.Model) getModel()).getObjects()[i];
+            if(i != selectedRow) {
+                list.add(seance);
+            }
+        }
+
+        ((SeanceTable.Model) getModel()).setObjects(list.toArray());
+    }
+
     private class Model extends AbstractTableModel {
 
         private final String[] entete = {"#", "Date de début", "Date de fin", "Professeur", "Classe", "N*Salle"};
-        private final Object[] objects;
+        private Object[] objects;
 
         public Model(Object[] list) {
             this.objects = list;
+        }
+
+        void setObjects(Object[] objects) {
+            this.objects = objects;
+        }
+
+        Object[] getObjects() {
+            return objects;
         }
 
         /**
@@ -77,7 +109,7 @@ public class SeanceTable extends JTable{
 
             switch (columnIndex) {
                 case 0:
-                    return "    " + (rowIndex+1);
+                    return (rowIndex+1);
                 case 1:
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm");
                     return simpleDateFormat.format(item.getDateDebut().getTime().getTime());
@@ -93,6 +125,10 @@ public class SeanceTable extends JTable{
             }
 
             return "";
+        }
+
+        public Seance getSelected() {
+            return (Seance) this.objects[getSelectedRow()];
         }
     }
 }

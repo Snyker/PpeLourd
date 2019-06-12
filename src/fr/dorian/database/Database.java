@@ -82,43 +82,6 @@ public class Database {
     REQUESTS
      */
 
-    public <T> Collection<? extends T> select(String request, T lambda) {
-
-        final Collection<T> collection = new ArrayList<>();
-
-        connectDb();
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(request);
-            if(preparedStatement.execute()) {
-
-                ResultSet resultSet = preparedStatement.getResultSet();
-
-                while(resultSet.next()) {
-
-
-
-                }
-
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        disconnectDb();
-
-        return collection;
-    }
-
-    /**
-     *
-     * @param request
-     */
-    public void request(String request){
-
-    }
-
     /**
      *
      * @param table
@@ -169,19 +132,25 @@ public class Database {
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO " + table + "("+keys+") VALUES ("+keysInt+")", statement);
-            applyValues(preparedStatement, values);
+            preparedStatement = applyValues(preparedStatement, values);
 
-            preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            resultSet.next();
-            lastInsertId = resultSet.getInt(1);
+            int affRow = preparedStatement.executeUpdate();
+
+            if(affRow <= 0) {
+                System.out.println("Aucune ligne n'a été ajoutée.");
+            } else {
+                ResultSet resultSet = preparedStatement.getGeneratedKeys();
+                resultSet.next();
+                lastInsertId = resultSet.getInt(1);
+            }
             preparedStatement.close();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }finally {
+            disconnectDb();
         }
 
-        disconnectDb();
         return lastInsertId;
     }
 
@@ -195,7 +164,7 @@ public class Database {
         StringBuilder keys = new StringBuilder();
 
         for (Object o : objects.keySet()){
-            if(o instanceof String)
+            if(o instanceof String && !((String) o).isEmpty())
                 keys.append(o).append(", ");
         }
 
@@ -238,49 +207,45 @@ public class Database {
         return values;
     }
 
-    private void applyValues(PreparedStatement statement, Object[] values) throws SQLException {
+    private PreparedStatement applyValues(PreparedStatement statement, Object[] values) throws SQLException {
 
         int index = 1;
 
         for(Object o : values){
             if(o instanceof String) {
                 statement.setString(index, (String) o);
-            }
-
+            } else
             if(o instanceof Integer){
                 statement.setInt(index, (Integer) o);
-            }
-
+            } else
             if(o instanceof Double) {
                 statement.setDouble(index, (Double) o);
-            }
-
+            } else
             if(o instanceof Float) {
                 statement.setFloat(index, (Float) o);
-            }
-
+            } else
             if(o instanceof Long) {
                 statement.setLong(index, (Long) o);
-            }
-
+            } else
             if(o instanceof Date) {
                 Date date = (Date) o;
                 date.setHours(0); date.setMinutes(0); date.setSeconds(0);
                 java.sql.Date sqlDate = new java.sql.Date(date.getTime());
                 statement.setDate(index, sqlDate);
-            }
-
+            } else
             if(o instanceof Boolean) {
                 statement.setBoolean(index, (Boolean) o);
-            }
-
+            } else
             if(o == null) {
                 statement.setObject(index, null);
+            } else {
+                statement.setObject(index, o);
             }
 
             index++;
         }
 
+        return statement;
     }
 
     private String convert(Object[] objects) {

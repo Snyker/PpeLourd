@@ -66,7 +66,7 @@ public class Seance{
         options.put("id_personne",professeur.getId());
         options.put("id_salle", salle.getId());
 
-        int added = database.insert("dbo.seance", options, Statement.RETURN_GENERATED_KEYS);
+        int added = database.insert("dbo.seance", options);
 
         return added>0;
     }

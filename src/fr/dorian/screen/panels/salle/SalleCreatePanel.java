@@ -34,10 +34,10 @@ public class SalleCreatePanel extends JPanel{
         this.add(nb_max);
         this.add(nb_max_field);
 
-        Label obg = new Label("* : Champs obligatoire");
+        JLabel obg = new JLabel("* : Champs obligatoire");
         obg.setFont(new Font("SansSerif", Font.PLAIN, 9));
         this.add(obg);
-        this.add(new Label());
+        this.add(new JLabel());
 
         PrimaryButton confirm = new PrimaryButton("Créer la salle");
         confirm.addActionListener(e -> {

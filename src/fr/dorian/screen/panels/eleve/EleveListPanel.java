@@ -110,6 +110,14 @@ public class EleveListPanel extends JPanel{
 
         panel.add(new JLabel("Filtrer : "));
         panel.add(field);
+
+        JButton emploi = new JButton("Emploi du temps");
+        emploi.addActionListener(e -> {
+            Eleve selected = table.getSelected();
+            if(selected != null) new EleveEmploiFrame(selected);
+        });
+        panel.add(emploi);
+
         add(panel, BorderLayout.SOUTH);
 
         frame.pack();

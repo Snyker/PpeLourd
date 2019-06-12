@@ -56,10 +56,10 @@ public class ProfesseurCreatePanel extends JPanel{
         this.add(telephone);
         this.add(telephone_field);
 
-        Label obg = new Label("* : Champs obligatoire");
+        JLabel obg = new JLabel("* : Champs obligatoire");
         obg.setFont(new Font("SansSerif", Font.PLAIN, 9));
         this.add(obg);
-        this.add(new Label());
+        this.add(new JLabel());
 
         PrimaryButton confirm = new PrimaryButton("Créer le professeur");
         confirm.addActionListener(e -> {

@@ -10,7 +10,9 @@ import fr.dorian.screen.fields.model.SpinnerDateTimeModel;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicPanelUI;
+import javax.swing.text.DateFormatter;
 import java.awt.*;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -23,28 +25,43 @@ public class SeanceCreatePanel extends JPanel{
         this.setUI(new BasicPanelUI());
         this.setLayout(new GridLayout(0, 2, 10, 10));
 
-        Date current = new Date();
-        current.setMinutes(0);
-        current.setSeconds(0);
+        Date date = new Date();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 24); // 24 == 12 PM == 00:00:00
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        calendar.getTime().setYear(date.getYear());
 
         Label date_debut = new Label("Date de début *");
-        SpinnerDateTimeModel dateTimeModel = new SpinnerDateTimeModel();
-        JSpinner dateModel = new JSpinner( dateTimeModel);
-        JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(dateModel, "YYYY-MM-dd HH:mm");
+        SpinnerDateModel model = new SpinnerDateModel();
+        model.setCalendarField(Calendar.HOUR_OF_DAY);
+        model.setValue(calendar.getTime());
+
+        JSpinner dateModel = new JSpinner( model);
+        JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(dateModel, "MM-dd HH:mm");
         dateModel.setEditor(timeEditor);
-        dateModel.setValue(current); // will only show the current time
 
+        DateFormatter formatter = (DateFormatter)timeEditor.getTextField().getFormatter();
+        formatter.setAllowsInvalid(false); // this makes what you want
+        formatter.setOverwriteMode(true);
 
-        //DateTimeModel dateModel = new DateTimeModel();
-        //JDatePanelImpl datePanel = new JDatePanelImpl(dateModel.getModel(), dateModel.getProp());
-        //JDatePickerImpl date_debut_field = new JDatePickerImpl(datePanel, new DateBornLabelFormatter());
+        dateModel.setEditor(timeEditor);
 
         Label date_fin = new Label("Date de fin *");
-        JSpinner dateModel2 = new JSpinner( new SpinnerDateModel() );
-        JSpinner.DateEditor timeEditor2 = new JSpinner.DateEditor(dateModel2, "YYYY-MM-dd HH:mm");
+        model = new SpinnerDateModel();
+        model.setCalendarField(Calendar.HOUR_OF_DAY);
+        model.setValue(calendar.getTime());
+
+        JSpinner dateModel2 = new JSpinner(model);
+        JSpinner.DateEditor timeEditor2 = new JSpinner.DateEditor(dateModel2, "MM-dd HH:mm");
+        formatter = (DateFormatter)timeEditor2.getTextField().getFormatter();
+        formatter.setAllowsInvalid(false); // this makes what you want
+        formatter.setOverwriteMode(true);
+
         dateModel2.setEditor(timeEditor2);
-        current.setHours(current.getHours()+1);
-        dateModel2.setValue(current); // will only show the current time
 
         Label classe = new Label("Classe");
         JComboBox classe_field = new JComboBox();
@@ -76,12 +93,12 @@ public class SeanceCreatePanel extends JPanel{
         add(salle);
         add(salle_field);
 
-        Label obg = new Label("* : Champs obligatoire");
+        JLabel obg = new JLabel("* : Champs obligatoire");
         obg.setFont(new Font("SansSerif", Font.PLAIN, 9));
         this.add(obg);
-        this.add(new Label(null));
+        this.add(new JLabel());
 
-        PrimaryButton confirm = new PrimaryButton("Créer la salle");
+        PrimaryButton confirm = new PrimaryButton("Créer la séance");
         confirm.addActionListener(e -> {
 
             final Date dateDebut = (Date) dateModel.getModel().getValue();
@@ -128,10 +145,11 @@ public class SeanceCreatePanel extends JPanel{
                 if(seance.register()){
                     Application.getSeanceList().put(Application.getSeanceList().size()+1, seance);
                     System.out.println("Bien enregistré");
+                    JOptionPane.showMessageDialog(this, "La séance a bien été crée.");
                     //Fermer la fenetre
                     frame.dispose();
                 } else {
-                    System.out.println("Impossible d'enregistrer");
+                    JOptionPane.showMessageDialog(this, "Impossible de créer la séance.");
                 }
 
             }
@@ -140,6 +158,39 @@ public class SeanceCreatePanel extends JPanel{
 
         this.add(confirm);
 
+        createAndShowGUI();
+
+    }
+
+    private void createAndShowGUI() {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 24); // 24 == 12 PM == 00:00:00
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        SpinnerDateModel model = new SpinnerDateModel();
+        model.setValue(calendar.getTime());
+
+        JSpinner spinner = new JSpinner(model);
+
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "MM-dd HH:mm:ss");
+        DateFormatter formatter = (DateFormatter)editor.getTextField().getFormatter();
+        formatter.setAllowsInvalid(false); // this makes what you want
+        formatter.setOverwriteMode(true);
+
+        spinner.setEditor(editor);
+
+        JPanel content = new JPanel();
+        content.add(spinner);
+
+        JFrame frame = new JFrame("Demo");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.getContentPane().add(content);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private void errorField(JComponent label) {

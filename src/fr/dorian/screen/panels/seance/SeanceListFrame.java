@@ -16,21 +16,19 @@ public class SeanceListFrame extends JFrame implements WindowListener {
     private SeanceMainPanel panel;
 
     public SeanceListFrame(SeanceMainPanel panel) {
+        super("Liste des séances");
         this.panel = panel;
 
-        this.setTitle("Liste des séances");
-        //this.setSize(new Dimension(500, 300));
-        this.setResizable(false);
-        this.setPreferredSize(new Dimension(750, 450));
         this.setLocationRelativeTo(null);
         this.setLayout(new FlowLayout());
 
         this.add(new SeanceListPanel(this));
 
         this.addWindowListener(this);
+        this.pack();
 
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
-
     }
 
     /**

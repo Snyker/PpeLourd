@@ -1,5 +1,6 @@
 package fr.dorian.content;
 
+import java.sql.PreparedStatement;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

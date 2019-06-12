@@ -25,10 +25,10 @@ public class ClasseCreatePanel extends JPanel{
         this.add(section);
         this.add(section_field);
 
-        Label obg = new Label("* : Champs obligatoire");
+        JLabel obg = new JLabel("* : Champs obligatoire");
         obg.setFont(new Font("SansSerif", Font.PLAIN, 9));
         this.add(obg);
-        this.add(new Label());
+        this.add(new JLabel());
 
         PrimaryButton confirm = new PrimaryButton("Créer la classe");
         confirm.addActionListener(e -> {
@@ -37,7 +37,7 @@ public class ClasseCreatePanel extends JPanel{
 
             boolean canReg = true;
 
-            if(sectionValue.isEmpty() || !sectionValue.matches("[a-zA-Z0-9]+")) {
+            if(sectionValue.isEmpty() || !sectionValue.matches("[a-zA-Z0-9\\-_]+")) {
                 errorField(section_field);
                 canReg = false;
             } else

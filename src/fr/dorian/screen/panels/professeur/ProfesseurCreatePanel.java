@@ -123,9 +123,10 @@ public class ProfesseurCreatePanel extends JPanel{
                         System.out.println("Bien enregistré");
                         //Fermer la fenetre
                         frame.dispose();
+                        JOptionPane.showMessageDialog(this,"Le professeur a bien été crée.");
                     }
                 } else {
-                    System.out.println("Impossible d'enregistrer car email ou telephone erroné");
+                    JOptionPane.showMessageDialog(this, "Impossible de créer le professeur.");
                 }
             }
 

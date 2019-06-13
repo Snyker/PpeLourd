@@ -46,13 +46,15 @@ public class ParentListPanel extends JPanel{
 
         JButton addEnfant = new JButton("Ajouter un enfant");
         addEnfant.addActionListener(e -> {
-            new ParentAddEleveFrame(table.getSelected());
+            Parent selected = table.getSelected();
+            if(selected != null) new ParentAddEleveFrame(selected);
         });
         westPanel.add(addEnfant);
 
         JButton listEnfant = new JButton("Liste des enfants");
         listEnfant.addActionListener(e -> {
-            new ParentListEleveFrame(table.getSelected());
+            Parent selected = table.getSelected();
+            if(selected != null) new ParentListEleveFrame(selected);
         });
         westPanel.add(listEnfant);
 

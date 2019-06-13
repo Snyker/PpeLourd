@@ -74,8 +74,9 @@ public class SalleCreatePanel extends JPanel{
                     System.out.println("Bien enregistré");
                     //Fermer la fenetre
                     frame.dispose();
+                    JOptionPane.showMessageDialog(this, "La salle a bien été crée.");
                 } else {
-                    System.out.println("Impossible d'enregistrer");
+                    JOptionPane.showMessageDialog(this, "Impossible de créer la salle.");
                 }
             }
 

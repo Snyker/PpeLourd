@@ -148,10 +148,9 @@ public class SeanceCreatePanel extends JPanel{
                     JOptionPane.showMessageDialog(this, "La séance a bien été crée.");
                     //Fermer la fenetre
                     frame.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Impossible de créer la séance.");
                 }
-
+            } else {
+                JOptionPane.showMessageDialog(this, "Impossible de créer la séance.");
             }
 
         });

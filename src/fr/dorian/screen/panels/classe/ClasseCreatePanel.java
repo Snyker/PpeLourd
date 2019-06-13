@@ -51,8 +51,9 @@ public class ClasseCreatePanel extends JPanel{
                     System.out.println("Bien enregistré");
                     //Fermer la fenetre
                     frame.dispose();
+                    JOptionPane.showMessageDialog(this, "La classe a bien été crée.");
                 } else {
-                    System.out.println("Impossible d'enregistrer");
+                    JOptionPane.showMessageDialog(this, "Impossible de crée la classe.");
                 }
             }
 

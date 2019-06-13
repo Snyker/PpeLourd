@@ -113,9 +113,10 @@ public class EleveCreatePanel extends JPanel{
                         System.out.println("Bien enregistré");
                         //Fermer la fenetre
                         frame.dispose();
+                        JOptionPane.showMessageDialog(this, "L'élève a bien été crée.");
                     }
                 } else {
-                    System.out.println("Impossible d'enregistrer car email ou telephone erroné");
+                    JOptionPane.showMessageDialog(this, "Impossible d'enregistrer l'élève.");
                 }
             }
 

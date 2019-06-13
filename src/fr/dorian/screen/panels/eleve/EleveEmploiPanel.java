@@ -87,10 +87,6 @@ public class EleveEmploiPanel extends JPanel {
 
         add(content,BorderLayout.CENTER);
 
-        //EmploiTable table = new EmploiTable(seanceList.toArray());
-        //JScrollPane scrollPane = new JScrollPane(table);
-        //add(scrollPane, BorderLayout.CENTER);
-
         frame.pack();
     }
 }

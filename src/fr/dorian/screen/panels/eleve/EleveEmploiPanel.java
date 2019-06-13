@@ -60,13 +60,13 @@ public class EleveEmploiPanel extends JPanel {
         }
 
         JPanel content = new JPanel();
-        content.setLayout(new GridLayout(6, 5, 10, 10));
+        content.setLayout(new GridLayout(3, 5, 10, 10));
 
         for(int i = 0; i < 5; i++) {
-            for(int j = 0; j < 6; j++) {
-                int index = j + (i*6);
+            for(int j = 0; j < 3; j++) {
+                int index = j + (i*3);
                 if(index < seanceList.size()) {
-                    Seance seance = seanceList.get(j + (i * 5));
+                    Seance seance = seanceList.get(index);
 
                     JPanel panel = new JPanel();
                     panel.setLayout(new GridLayout(4, 1, 15, 15));

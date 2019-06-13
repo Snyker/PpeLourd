@@ -51,9 +51,11 @@ public class Seance{
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timeStart);
+        calendar.set(Calendar.YEAR, 2019);
         this.date_debut = calendar;
         calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timeEnd);
+        calendar.set(Calendar.YEAR, 2019);
         this.date_fin = calendar;
     }
 

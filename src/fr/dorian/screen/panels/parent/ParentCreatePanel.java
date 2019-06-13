@@ -117,9 +117,10 @@ public class ParentCreatePanel extends JPanel{
                         System.out.println("Bien enregistré");
                         //Fermer la fenetre
                         frame.dispose();
+                        JOptionPane.showMessageDialog(this, "Le parent a bien été crée.");
                     }
                 } else {
-                    System.out.println("Impossible d'enregistrer car email ou telephone erroné");
+                    JOptionPane.showMessageDialog(this, "Impossible de crée le parent.");
                 }
             }
 
